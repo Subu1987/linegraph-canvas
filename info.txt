@@ -1,0 +1,154 @@
+/*************************** canvas ****************************/
+
+// canvas is nothing but a place where we can draw & paint, 
+// when we called html canvas, web canvas that means there are also a canvas available in our webpages
+// & the best part of canvas is that we can draw anything in that.
+// all the high class graphics & games are drawn in canvas
+// canvas is a place where, there is a pencil & we can draw, here pencil means maths
+
+// when we use graph papers we have co-ordinates, 1st we get the x,y then plotting them in graph paper we draw line.
+// in case of canvas, here also we get 1st x,y points after plotting them we draw a line, 
+// so canvas is like graph papers & to draw in it we have to know the co-ordinates system(x,y)
+
+// in HTML5 we have direct element called canvas, & we give width & height directly in the element or using JS
+// & we cant give width & height into canvas by using class
+
+// the white area within the black border line is our graph paper
+// & the 4 points of the canvas is A(0,0) , B(1000,0) , C(1000,500) D(0,500)
+// WE USE html just to create the canvas & JS is the language use to draw anything in the canvas 
+// JS is the place where we do all the maths of plotting & drawing 
+// 1st we have to do is, fetch the canvas 
+// we fetch the canvas element & store it in a variable like this:
+
+        let canvas= document.getElementById('canvas')
+
+// now we get the HTML element but we cant draw in element
+// so we need access of white area of the canvas element which called canvas context.
+// just like in browser we have white space called browser context, similarly we have somthing called canvas context
+
+// now to get the context we simply access element by getContext('2d') store it in a variable; 2d becauese we are writing in a 2d plane
+// getContext() is the function that gives us access of the context of canvas
+// like this :
+    let ctx= canva.getContext('2d');
+
+// & now the ctx is holding context of canvas, so we use ctx to draw,animate everything in the canvas
+
+/*************************** how to draw lines ****************************/
+
+// there are two main function,which use to draw anything in the canvas context
+// 1. moveTo
+// 2. lineTo
+// just assume that, ctx is our pencil although its just our context of canvas 
+// while using moveTo , is something that moves your pencil in the canvas
+// & lineTo is something that moves your pencil while drawing.
+
+// now we move our ctx or our pencil at (0,0) point usnig  ctx.moveTo(0,0)
+// after that we move our pencil at (100,100) but while drawing a line using ctx.linTo(100,100)
+// then after all of this operation simply we stroke function to execute the operation or drawing 
+// like this:
+
+        ctx.moveTo(0,0);
+
+        ctx.lineTo(100,100);
+
+        ctx.stroke();
+// if we dont use stroke line will there but we dont see it, stroke finalize everything.
+// now if we want to go at that particular point, we will plot point x=1000(from left to right) & y=100(from top to bottom)
+// here we are not calculating distance(so no substracting), those are the fixed points & go from A to B (FIXED ADDRESSES)
+// after that:
+
+        ctx.moveTo(0, 0);
+        ctx.lineTo(100, 100);                               
+        ctx.lineTo(1000, 100);
+
+        ctx.lineTo(0, 500);
+        ctx.lineTo(100, 100);
+
+        ctx.stroke();
+// wherever im in which point dont care, just remember where we want to go, in which point & thats way we plotting our co-ordinates.
+// to assume the point of plotting think that, always x  will be (from left to right) & y (from top to bottom) 
+
+
+// now making a graph out of it 
+// 1st we have to plot points to get x & y line in our canvas context 
+// like this: 
+        ctx.moveTo(50, 50);
+        ctx.lineTo(50, 650);
+        ctx.lineTo(950, 650);
+
+        ctx.stroke();
+
+// after that if we want to plot a line diagonally from that point, we plot our points like this 
+
+        ctx.moveTo(50, 50);
+        ctx.lineTo(50, 650);
+
+        ctx.lineTo(950, 650);
+        ctx.moveTo(50, 650);
+
+        ctx.lineTo(100, 550);
+
+        ctx.stroke();
+
+// remember here, we not calculating the distance between points we are just plotting the points, 
+// here, ctx.moveTo(100,550) means from left to 100px & from top to 550px.
+// & from bottom top we always go negative(minus)
+// & from right to left we always go negative (minus)
+
+
+
+// now let make a Array of data , let data= [200,300,100,150,400,200];
+// & we are plotting data elements value in y 
+// like this : ctx.lineTo(100, data[0]);
+// but the problem is that y is plotting 200px from top but we want it plotted from the bottom ,
+// so we have minus it from 650(height of y line) means negative (-450)
+// the gap between them 650-450 = 200(same data we have)
+
+// now we want increase our x, & plotting y to 2nd element of data like this:
+
+      ctx.lineTo(200, 650- data[1]);
+      ctx.lineTo(300, 650- data[2]);
+// why we need to write this again & again, we have to something called loop to go through each element of Array.
+
+    for(let i=0; i<data.length; i++){
+
+    ctx.lineTo(100, 650- data[i]);
+
+}
+
+// we also want to increase x again & again intially it will x=150; after that it increase x+=100;
+
+        let x=150;
+
+        for(let i=0; i<data.length; i++){
+
+            let y= 650- data[i];
+
+            ctx.lineTo(x,y);
+            x=x+100;
+
+        }
+
+        ctx.stroke();
+
+// in case of forEach loop everything will same whatever available in data[i] = available in value also.
+
+        let x=150;
+        data.forEach((value)=>{
+
+            let y= 650- value;
+            ctx.lineTo(x,y);
+            x=x+100;
+
+        })
+        ctx.stroke();
+
+
+
+// Now we can plot text in same place if we want by using fillText(),
+// which take 3 parameters, 1st one is text we want to write , then x & Y.
+// now this is also in loop   ctx.fillText(value, x, y); so text will printed in each point.
+// now if we want to make our text above the line we have minus it from y so that it will adjusted in height.
+        ctx.fillText(value, x, y-20);
+
+/*************************** how to draw circle ****************************/
